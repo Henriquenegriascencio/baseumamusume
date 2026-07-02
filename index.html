@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeuComputador\Personagens\Perfil_Avancado.exe</title>
+    <style>
+        /* Cores e Fontes Clássicas do Win95 */
+        body {
+            background-color: #008080; /* Azul-piscina clássico */
+            font-family: "MS Sans Serif", Tahoma, Arial, sans-serif;
+            font-size: 12px;
+            margin: 20px auto;
+            max-width: 720px;
+            padding: 10px;
+        }
+
+        /* Janela Principal */
+        .window {
+            background-color: #c0c0c0;
+            border: 2px solid;
+            border-color: #fff #0a0a0a #0a0a0a #fff;
+            box-shadow: 1px 1px 0 0 #000;
+            padding: 2px;
+        }
+
+        /* Barra de Título */
+        .title-bar {
+            background: linear-gradient(90deg, #000080, #1084d0);
+            color: white;
+            padding: 3px 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .title-bar-text {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .title-bar-controls button {
+            background-color: #c0c0c0;
+            border: 1px solid;
+            border-color: #fff #0a0a0a #0a0a0a #fff;
+            font-size: 10px;
+            font-weight: bold;
+            width: 16px;
+            height: 14px;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .title-bar-controls button:active {
+            border-color: #0a0a0a #fff #fff #0a0a0a;
+            padding: 1px 0 0 1px;
+        }
+
+        /* Menu de Opções */
+        .menu-bar {
+            display: flex;
+            gap: 10px;
+            padding: 4px 5px;
+            border-bottom: 1px solid #808080;
+        }
+
+        .menu-item {
+            cursor: pointer;
+        }
+
+        .menu-item span {
+            text-decoration: underline;
+        }
+
+        /* Área de Conteúdo Interno */
+        .window-body {
+            padding: 15px;
+        }
+
+        /* Layout em duas colunas para o topo */
+        .profile-header {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .info-column {
+            flex: 1;
+        }
+
+        /* Caixa do Visualizador de Imagens (Estilo Mplayer/MDI) */
+        .photo-column {
+            width: 180px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .photo-title {
+            font-weight: bold;
+            font-size: 11px;
+            margin-bottom: 5px;
+            color: #000;
+        }
+
+        .viewer-box {
+            background-color: #808080;
+            border: 2px solid;
+            border-color: #5a5a5a #fff #fff #5a5a5a;
+            width: 100%;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .viewer-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            image-rendering: pixelated;
+        }
+
+        /* Barra de Controle de Mídia (Botões de rolar) */
+        .viewer-controls {
+            display: flex;
+            background-color: #c0c0c0;
+            border-top: 1px solid #808080;
+            padding: 4px;
+            gap: 4px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background-color: #c0c0c0;
+            border: 1px solid;
+            border-color: #fff #0a0a0a #0a0a0a #fff;
+            font-family: monospace;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 2px 8px;
+            cursor: pointer;
+        }
+
+        .nav-btn:active {
+            border-color: #0a0a0a #fff #fff #0a0a0a;
+            padding: 3px 7px 1px 9px;
+        }
+
+        .photo-caption {
+            font-size: 10px;
+            text-align: center;
+            margin-top: 4px;
+            color: #404040;
+        }
+
+        /* Caixas de Texto Estilo "Recuado" */
+        .field-box {
+            background-color: #fff;
+            border: 2px solid;
+            border-color: #808080 #fff #fff #808080;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+
+        .field-box.no-margin {
+            margin-bottom: 0;
+            height: calc(100% - 24px);
+        }
+
+        h2 {
+            font-size: 13px;
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #000;
+            border-bottom: 1px dashed #808080;
+            padding-bottom: 3px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Tabelas */
+        .win-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .win-table td {
+            padding: 4px;
+            vertical-align: top;
+            line-height: 1.4;
+        }
+
+        .label {
+            font-weight: bold;
+            width: 30%;
+            color: #000;
+        }
+
+        /* Listas Simples */
+        .win-list {
+            margin: 0;
+            padding-left: 20px;
+            line-height: 1.5;
+        }
+
+        /* Estilo para Segredos (Alerta) */
+        .secret-box {
+            background-color: #ffffe1; 
+            border: 1px solid #808080;
+            padding: 8px;
+            margin-top: 10px;
+            font-family: monospace;
+        }
+
+        /* Rodapé de Botões */
+        .buttons-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .win-btn {
+            background-color: #c0c0c0;
+            border: 2px solid;
+            border-color: #fff #0a0a0a #0a0a0a #fff;
+            padding: 4px 15px;
+            min-width: 75px;
+            font-family: inherit;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .win-btn:active {
+            border-color: #0a0a0a #fff #fff #0a0a0a;
+        }
+
+        .win-btn.default {
+            outline: 1px black solid;
+            outline-offset: -3px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="window">
+    <div class="title-bar">
+        <div class="title-bar-text">
+            <span>💾 Registro_Personagem_v3.exe</span>
+        </div>
+        <div class="title-bar-controls">
+            <button>_</button>
+            <button>🗖</button>
+            <button style="margin-left: 2px;">X</button>
+        </div>
+    </div>
+
+    <div class="menu-bar">
+        <div class="menu-item"><span>A</span>rquivo</div>
+        <div class="menu-item"><span>E</span>ditar</div>
+        <div class="menu-item"><span>X</span>ibir</div>
+        <div class="menu-item"><span>A</span>juda</div>
+    </div>
+
+    <div class="window-body">
+        
+        <div class="profile-header">
+            
+            <div class="info-column">
+                <div class="field-box no-margin">
+                    <h2>🆔 Propriedades de Identidade</h2>
+                    <table class="win-table">
+                        <tr>
+                            <td class="label">Nome:</td>
+                            <td>[Insira o Nome Aqui]</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Família:</td>
+                            <td>[Mãe, Pai, Irmãos ou Clã]</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Status:</td>
+                            <td style="color: green; font-weight: bold;">🟢 ONLINE.SYS</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="photo-column">
+                <div class="photo-title">🖼️ Visualizador_Mídia.exe</div>
+                
+                <div class="viewer-box">
+                    <img id="char-image" src="https://via.placeholder.com/180x180/808080/000000?text=Foto+1" alt="Foto do Personagem">
+                </div>
+                
+                <div class="viewer-controls">
+                    <button class="nav-btn" onclick="mudarImagem(-1)">&lt;&lt;</button>
+                    <span id="image-counter" style="font-size: 11px; min-width: 40px; text-align: center;">1 / 4</span>
+                    <button class="nav-btn" onclick="mudarImagem(1)">&gt;&gt;</button>
+                </div>
+                
+                <div class="photo-caption" id="image-filename">imagem_01.bmp</div>
+            </div>
+
+        </div>
+
+        <div class="field-box">
+            <h2>🎨 Aparência Geral (.txt)</h2>
+            <p style="margin: 0; line-height: 1.4;">
+                Descreva aqui os detalhes físicos do personagem de forma mais textual: estilo de cabelo, roupas marcantes, cores principais, altura, cicatrizes ou acessórios específicos que ele usa.
+            </p>
+        </div>
+
+        <div class="field-box">
+            <h2>📝 Biografia & Parâmetros (`config.ini`)</h2>
+            
+            <p style="margin-bottom: 10px; line-height: 1.4;">
+                <strong>Descrição Breve:</strong> Escreva um resumo da história de origem do personagem, quem ele é no mundo e qual o seu principal objetivo ou personalidade.
+            </p>
+
+            <table class="win-table" style="margin-bottom: 10px; border-top: 1px solid #e0e0e0; padding-top: 8px;">
+                <tr>
+                    <td class="label">❤️ Gosta:</td>
+                    <td>[Item A, Passatempo B, Comida Favorita]</td>
+                </tr>
+                <tr>
+                    <td class="label">❌ Desgosta:</td>
+                    <td>[Tipos de pessoas, Situações, Climas]</td>
+                </tr>
+                <tr>
+                    <td class="label">🐱 Orelhas:</td>
+                    <td>[Descreva o tipo]</td>
+                </tr>
+                <tr>
+                    <td class="label">🦊 Rabo:</td>
+                    <td>[Descreva o rabo]</td>
+                </tr>
+            </table>
+
+            <div class="secret-box">
+                <strong>⚠️ [ARQUIVOS_CRIPTOGRAFADOS] — 2 SEGREDOS DETECTADOS:</strong>
+                <ol style="margin: 5px 0 0 20px; padding: 0;">
+                    <li><strong>Segredo 01:</strong> [Primeiro segredo oculto ou fato chocante sobre o passado]</li>
+                    <li><strong>Segredo 02:</strong> [Segundo segredo que quase ninguém sabe]</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="field-box">
+            <h2>🌐 Rede de Contatos (`Contatos.lnk`)</h2>
+            <ul class="win-list">
+                <li><strong>Personagem X (Aliado):</strong> Breve resumo de como se conhecem.</li>
+                <li><strong>Personagem Y (Rival):</strong> Detalhes da rivalidade.</li>
+            </ul>
+        </div>
+
+        <div class="field-box">
+            <h2>📅 Histórico de Logs (Aparições)</h2>
+            <table class="win-table">
+                <tr>
+                    <td class="label" style="width: 40%;">📺 Aparecimento em Média:</td>
+                    <td>[Ex: Anime Ep. 03, Mangá Vol. 1]</td>
+                </tr>
+                <tr>
+                    <td class="label" style="width: 40%;">🎪 Aparecimento em Eventos:</td>
+                    <td>[Ex: Show de Talentos, Arco da Praia]</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="field-box">
+            <h2>💽 Reprodutor de Áudio (`CD_Player.exe`)</h2>
+            <table class="win-table" style="background: #f0f0f0; border: 1px solid #808080;">
+                <tr style="background: #000080; color: white; font-weight: bold;">
+                    <td style="padding: 4px; width: 15%;">Faixa</td>
+                    <td style="padding: 4px;">Título do Álbum / Música</td>
+                    <td style="padding: 4px; width: 20%;">Ano</td>
+                </tr>
+                <tr>
+                    <td style="padding: 4px; border-bottom: 1px solid #d0d0d0;">01</td>
+                    <td style="padding: 4px; border-bottom: 1px solid #d0d0d0;">[Nome do Álbum Principal]</td>
+                    <td style="padding: 4px; border-bottom: 1px solid #d0d0d0;">1995</td>
+                </tr>
+                <tr>
+                    <td style="padding: 4px;">02</td>
+                    <td>[Música de Tema]</td>
+                    <td>1996</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="buttons-footer">
+            <button class="win-btn default">OK</button>
+            <button class="win-btn">Cancelar</button>
+            <button class="win-btn" disabled>Aplicar</button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // Substitua os links abaixo pelos links ou arquivos das suas 4 imagens!
+    const listaImagens = [
+        "https://via.placeholder.com/180x180/808080/000000?text=Foto+1",
+        "https://via.placeholder.com/180x180/404040/ffffff?text=Foto+2",
+        "https://via.placeholder.com/180x180/202020/ffffff?text=Foto+3",
+        "https://via.placeholder.com/180x180/000080/ffffff?text=Foto+4"
+    ];
+
+    let imagemAtual = 0;
+
+    function mudarImagem(direcao) {
+        imagemAtual += direcao;
+        
+        // Faz a lista dar a volta se passar do limite
+        if (imagemAtual >= listaImagens.length) {
+            imagemAtual = 0;
+        }
+        if (imagemAtual < 0) {
+            imagemAtual = listaImagens.length - 1;
+        }
+
+        // Atualiza a imagem na tela
+        document.getElementById("char-image").src = listaImagens[imagemAtual];
+        
+        // Atualiza o contador (ex: 2 / 4)
+        document.getElementById("image-counter").innerText = (imagemAtual + 1) + " / " + listaImagens.length;
+        
+        // Atualiza a legenda com o "nome do arquivo"
+        document.getElementById("image-filename").innerText = "imagem_0" + (imagemAtual + 1) + ".bmp";
+    }
+</script>
+
+</body>
+</html>
